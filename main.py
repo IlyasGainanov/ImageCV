@@ -10,6 +10,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5 import QtGui
 from main_window import Ui_MainWindow
 
+filename = " "
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -25,6 +26,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def start_file_dialog(self):
         file, check = QFileDialog.getOpenFileName(None, "QFileDialog.getOpenFileName()",
                                                   "", "All Files (*);")
+        filename = file
         if check:
             self.display_img(file)
 
@@ -36,7 +38,12 @@ class Window(QMainWindow, Ui_MainWindow):
     def exec(self, file_name):
         self.label.setText("Медведи находятся где-то в выделенных областях")
         self.show()
-        img = cv.imread("venv/_2016-05-12 11-30-07_0102_2R.JPG")
+
+        filename = QFileDialog.getOpenFileName()
+
+        print(filename[0])
+
+        img = cv.imread(filename[0])
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
         upper = (35, 52, 163)
